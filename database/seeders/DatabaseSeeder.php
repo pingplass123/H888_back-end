@@ -18,21 +18,21 @@ class DatabaseSeeder extends Seeder
     {
         DB::table('users')->insert([
             'idUser' => 1,
-            'name' => 'pingplass1',
+            'username' => 'pingplass1',
             'password' => Hash::make('670qeycc'),
         ]);
 
 
         DB::table('users')->insert([
             'idUser' => 2,
-            'name' => 'pingplass2',
+            'username' => 'pingplass2',
             'password' => Hash::make('670qeycc'),
         ]);
 
 
         DB::table('users')->insert([
             'idUser' => 3,
-            'name' => 'pingplass3',
+            'username' => 'pingplass3',
             'password' => Hash::make('670qeycc'),
         ]);
 
