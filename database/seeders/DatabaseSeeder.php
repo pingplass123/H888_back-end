@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             'idCustomer' => 1,
             'idUser' => 3,
             'name' => 'pingCustomers',
-            'created_by' => 2,
+            'created_by' => 1,
         ]);
 
     }
