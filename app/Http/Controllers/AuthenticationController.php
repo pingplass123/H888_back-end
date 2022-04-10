@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BaseController as BaseController;
 
-class AuthenticationController extends Controller
+class AuthenticationController extends BaseController
 {
     public function login(Request $request)
     {
