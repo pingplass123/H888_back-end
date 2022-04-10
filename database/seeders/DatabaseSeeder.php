@@ -17,21 +17,21 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            'id' => 1,
+            'idUser' => 1,
             'name' => 'pingplass1',
             'password' => Hash::make('670qeycc'),
         ]);
 
 
         DB::table('users')->insert([
-            'id' => 2,
+            'idUser' => 2,
             'name' => 'pingplass2',
             'password' => Hash::make('670qeycc'),
         ]);
 
 
         DB::table('users')->insert([
-            'id' => 3,
+            'idUser' => 3,
             'name' => 'pingplass3',
             'password' => Hash::make('670qeycc'),
         ]);
