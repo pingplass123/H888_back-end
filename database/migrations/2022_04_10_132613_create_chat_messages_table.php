@@ -21,8 +21,6 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::statement("ALTER TABLE 'chat_messages' ALTER COLUMN image TYPE MEDIUMBLOB");
-
         Schema::table('chat_messages', function($table) {
             $table->foreign('idRoom')->references('idRoom')->on('chat_rooms');
             $table->foreign('sentFrom')->references('idUser')->on('users');
