@@ -12,4 +12,13 @@ class Owner extends Model
     protected $table = 'owner';
 
     protected $primaryKey = 'idOwner';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'idUser',
+    ];
 }

@@ -19,3 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', [App\Http\Controllers\AuthenticationController::class, 'login']);
+Route::post('/create-admin/submit', [App\Http\Controllers\AuthenticationController::class, 'createAdminAccount']);
+Route::post('/create-customer/submit', [App\Http\Controllers\AuthenticationController::class, 'createCustomerAccount']);

@@ -21,7 +21,6 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'username',
-        'email',
     ];
 
     /**
@@ -47,6 +46,23 @@ class User extends Authenticatable
     public function isCustomer()
     {
         return Customer::where('idUser', '=', $this->idUser)->first();
+    }
+
+    public function assignToAdmin(String $name)
+    {
+        $admin = new Admin();
+        $admin->idUser = $this->idUser;
+        $admin->name = $name;
+        $admin->save();
+    }
+
+    public function assignToCustomer(String $name, int $idAdmin)
+    {
+        $customer = new Customer();
+        $customer->idUser = $this->idUser;
+        $customer->name = $name;
+        $customer->created_by = $idAdmin;
+        $customer->save();
     }
 
     public function messages()
