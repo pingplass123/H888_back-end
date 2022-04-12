@@ -47,12 +47,13 @@ class AuthenticationController extends BaseController
             'displayName' => 'bail|required|string|max:50',
             'username' => 'bail|required|string',
             'password' => 'bail|required|string',
-        ],[
-            'displayName.required'      => 'Display name must not be empty',
-            'displayName.max'    => 'Display name length must not exceed 50 characters',
-            'username.required'    => 'Username must not be empty',
-            'password.required'      => 'Password must not be empty',
         ]);
+        //[
+        //     'displayName.required'      => 'Display name must not be empty',
+        //     'displayName.max'    => 'Display name length must not exceed 50 characters',
+        //     'username.required'    => 'Username must not be empty',
+        //     'password.required'      => 'Password must not be empty',
+        // ]);
 
         if ($validatedData->fails()) {
             // $failedRules = $validatedData->failed(); =>$failedRules
