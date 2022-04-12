@@ -55,8 +55,8 @@ class AuthenticationController extends BaseController
         ]);
 
         if ($validatedData->fails()) {
-            $failedRules = $validatedData->failed();
-            return $this->sendError('Invalid Data.', ['error'=>$failedRules]);
+            // $failedRules = $validatedData->failed(); =>$failedRules
+            return $this->sendError('Invalid Data.', ['error']);
         }
         
         $user = new User();
