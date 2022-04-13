@@ -40,6 +40,10 @@ class AuthenticationController extends BaseController
             {
                 $success['id'] =  $user->isAdmin()->idAdmin;
             }
+            elseif($user->isAdmin() != []) // send id back as response
+            {
+                $success['belongsTo'] =  $user->isCustomer()->created_by;
+            }
 
             return $this->sendResponse($success, 'User login successfully.');
         } 
