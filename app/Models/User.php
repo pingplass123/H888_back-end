@@ -67,7 +67,7 @@ class User extends Authenticatable
         $customer->save();
 
         $chat_room = new ChatRoom();
-        $chat_room->idAdmin = $request->created_by;
+        $chat_room->idAdmin = $idAdmin;
         $chat_room->idCustomer = $customer->idCustomer;
         $chat_room->save();
 
