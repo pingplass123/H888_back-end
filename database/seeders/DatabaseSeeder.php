@@ -7,6 +7,9 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
+use App\Models\User;
+use App\Models\Owner;
+
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -16,43 +19,13 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'idUser' => 1,
-            'username' => 'pingplass1',
-            'password' => Hash::make('670qeycc'),
-        ]);
-
-
-        DB::table('users')->insert([
-            'idUser' => 2,
-            'username' => 'pingplass2',
-            'password' => Hash::make('670qeycc'),
-        ]);
-
-
-        DB::table('users')->insert([
-            'idUser' => 3,
-            'username' => 'pingplass3',
-            'password' => Hash::make('670qeycc'),
-        ]);
-
-        DB::table('owner')->insert([
-            'idOwner' => 1,
-            'idUser' => 1,
-        ]);
-
-        DB::table('admins')->insert([
-            'idAdmin' => 1,
-            'idUser' => 2,
-            'name' => 'ping',
-        ]);
-
-        DB::table('customers')->insert([
-            'idCustomer' => 1,
-            'idUser' => 3,
-            'name' => 'pingCustomers',
-            'created_by' => 1,
-        ]);
-
+        $user = new User();
+        $user->username = 'pingplass1';
+        $user->password = Hash::make('670qeycc');
+        $user->save();
+        
+        $owner = new Owner();
+        $owner->idUser = $user->idUser;
+        $owner->save();
     }
 }
