@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Admin;
 use App\Http\Controllers\BaseController as BaseController;
 
+use Validator;
+
 class AdminAccountController extends BaseController
 {
     public function getAdminList()

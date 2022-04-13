@@ -7,6 +7,8 @@ use App\Models\User;
 use App\Models\Customer;
 use App\Http\Controllers\BaseController as BaseController;
 
+use Validator;
+
 class CustomerAccountController extends BaseController
 {
     public function getCustomerList(Request $request)
