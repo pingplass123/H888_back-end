@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\BaseController as BaseController;
+use Validator;
 
 class AuthenticationController extends BaseController
 {
@@ -71,7 +72,7 @@ class AuthenticationController extends BaseController
 
     public function createCustomerAccount(Request $request)
     {
-        $validatedData = $request->validate([
+        $validatedData = Validator::make($request->all(), [
             'displayName' => 'bail|required|string|max:50',
             'username' => 'bail|required|string',
             'password' => 'bail|required|string',
