@@ -25,3 +25,8 @@ Route::post('/create-customer/submit', [App\Http\Controllers\AuthenticationContr
 Route::get('/fetch/admin-accounts', [App\Http\Controllers\AdminAccountController::class, 'getAdminList']);
 Route::post('/fetch/customer-accounts', [App\Http\Controllers\CustomerAccountController::class, 'getCustomerList']);
 
+Route::post('/edit/admin-name', [App\Http\Controllers\AdminAccountController::class, 'editAdminAccount']);
+Route::post('/edit/customer-name', [App\Http\Controllers\CustomerAccountController::class, 'editCustomerAccount']);
+
+Route::post('/delete/admin-account', [App\Http\Controllers\AdminAccountController::class, 'deleteAdminAccount']);
+Route::post('/delete/customer-account', [App\Http\Controllers\CustomerAccountController::class, 'deleteCustomerAccount']);
