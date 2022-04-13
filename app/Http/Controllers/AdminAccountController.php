@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Http\Controllers\BaseController as BaseController;
 
-class AdminAccountController extends Controller
+class AdminAccountController extends BaseController
 {
     public function getAdminList()
     {
@@ -13,5 +14,4 @@ class AdminAccountController extends Controller
 
         return $this->sendResponse($success, 'Get all admin account records.');
     }
-    
 }
