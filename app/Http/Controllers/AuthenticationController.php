@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\ChatRoom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\BaseController as BaseController;
@@ -40,8 +41,9 @@ class AuthenticationController extends BaseController
             {
                 $success['id'] =  $user->isAdmin()->idAdmin;
             }
-            elseif($user->isAdmin() != []) // send id back as response
+            elseif($user->isCustomer() != []) // send id back as response
             {
+                $success['id'] =  $user->isCustomer()->idCustomer;
                 $success['belongsTo'] =  $user->isCustomer()->created_by;
             }
 
@@ -108,10 +110,13 @@ class AuthenticationController extends BaseController
         $user->password = Hash::make($request->password);
         $user->save();
 
-        $user->assignToCustomer($request->displayName, $request->created_by);
+        $response = $user->assignToCustomer($request->displayName, $request->created_by);
+
+        $room = ChatRoom::where('idRoom', '=', $response["idRoom"])->first();
 
         $success['displayName'] = $request->displayName;
         $success['belongsTo'] = $request->created_by; // idAdmin
+        $sucess['chat_id'] = $room;
 
         return $this->sendResponse($success, 'Customer account created successfully.');
     }

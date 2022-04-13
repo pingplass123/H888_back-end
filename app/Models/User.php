@@ -8,6 +8,8 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+use App\Models\ChatRoom;
+
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -63,6 +65,18 @@ class User extends Authenticatable
         $customer->name = $name;
         $customer->created_by = $idAdmin;
         $customer->save();
+
+        $chat_room = new ChatRoom();
+        $chat_room->idAdmin = $request->created_by;
+        $chat_room->idCustomer = $customer->idCustomer;
+        $chat_room->save();
+
+        $data = [
+            "idCustomer" => $customer->idCustomer,
+            "idRoom" => $chat_room->idRoom
+        ];
+
+        return $data;
     }
 
     public function messages()
