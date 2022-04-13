@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Admin;
+use App\Models\Customer;
 use App\Http\Controllers\BaseController as BaseController;
 
 use Validator;
@@ -42,8 +43,14 @@ class AdminAccountController extends BaseController
 
     public function deleteAdminAccount(Request $request)
     {
+        $customersList = Customer::where('created_by', '=', $request->idAdmin)->get();
+
         $admin = Admin::where('idAdmin', '=', $request->idAdmin)->first();
         $user = User::where('idUser', '=', $admin->idUser)->first();
+
+        foreach($customersList as $customer){
+            $customer->delete();
+        }
 
         $admin->delete();
         $user->delete();
