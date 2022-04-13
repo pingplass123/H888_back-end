@@ -21,13 +21,10 @@ class CustomerAccountController extends BaseController
     public function editCustomerAccount(Request $request)
     {
         $validatedData = Validator::make($request->all(), [
-            'displayName' => 'bail|required|string|max:50',
-            'created_by' => 'bail|required|exists:admins,idAdmin'
+            'displayName' => 'bail|required|string|max:50'
         ],[
             'displayName.required'      => 'Display name must not be empty',
-            'displayName.max'    => 'Display name length must not exceed 50 characters',
-            'created_by.required'      => 'Creator of this account must be assigned',
-            'created_by.exists'      => 'This creator is invalid, not found record'
+            'displayName.max'    => 'Display name length must not exceed 50 characters'
         ]);
 
         if ($validatedData->fails()) {
