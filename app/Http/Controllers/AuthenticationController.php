@@ -62,7 +62,7 @@ class AuthenticationController extends BaseController
         }
         
         $user = new User();
-        $user->name = $request->username;
+        $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->save();
 
@@ -93,7 +93,7 @@ class AuthenticationController extends BaseController
         }
         
         $user = new User();
-        $user->name = $request->username;
+        $user->username = $request->username;
         $user->password = Hash::make($request->password);
         $user->save();
 
