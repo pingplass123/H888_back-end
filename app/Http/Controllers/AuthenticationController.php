@@ -68,7 +68,7 @@ class AuthenticationController extends BaseController
 
         $user->assignToAdmin($request->displayName);
 
-        return $this->sendResponse($success, 'Admin account created successfully.');
+        return $this->sendResponse('Admin account created successfully.');
     }
 
     public function createCustomerAccount(Request $request)
@@ -99,6 +99,6 @@ class AuthenticationController extends BaseController
 
         $user->assignToCustomer($request->displayName, $request->created_by);
 
-        return $this->sendResponse($success, 'Customer account created successfully.');
+        return $this->sendResponse('Customer account created successfully.');
     }
 }
