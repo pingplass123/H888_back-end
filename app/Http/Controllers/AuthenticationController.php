@@ -36,6 +36,11 @@ class AuthenticationController extends BaseController
             $success['name'] =  $user->username;
             $success['role'] =  $role;
 
+            if($user->isAdmin() != []) // send id back as response
+            {
+                $success['id'] =  $user->isAdmin()->idAdmin;
+            }
+
             return $this->sendResponse($success, 'User login successfully.');
         } 
         else{ 
@@ -68,7 +73,9 @@ class AuthenticationController extends BaseController
 
         $user->assignToAdmin($request->displayName);
 
-        return $this->sendResponse('Admin account created successfully.');
+        $success['displayName'] = $request->displayName;
+
+        return $this->sendResponse($success, 'Admin account created successfully.');
     }
 
     public function createCustomerAccount(Request $request)
@@ -99,6 +106,9 @@ class AuthenticationController extends BaseController
 
         $user->assignToCustomer($request->displayName, $request->created_by);
 
-        return $this->sendResponse('Customer account created successfully.');
+        $success['displayName'] = $request->displayName;
+        $success['belongsTo'] = $request->created_by; // idAdmin
+
+        return $this->sendResponse($success, 'Customer account created successfully.');
     }
 }
