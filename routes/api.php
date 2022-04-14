@@ -32,3 +32,4 @@ Route::post('/delete/admin-account', [App\Http\Controllers\AdminAccountControlle
 Route::post('/delete/customer-account', [App\Http\Controllers\CustomerAccountController::class, 'deleteCustomerAccount']);
 
 Route::post('/fetch/rooms-list', [App\Http\Controllers\ChatController::class, 'fetchAdminRooms']);
+Route::post('/fetch/chat-history', [App\Http\Controllers\ChatController::class, 'fetchChatHistory']);

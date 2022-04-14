@@ -4,10 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\User;
-use App\Models\Admin;
 use App\Models\Customer;
 use App\Models\ChatRoom;
+use App\Models\ChatMessage;
 
 use Illuminate\Support\Arr;
 
@@ -29,5 +28,12 @@ class ChatController extends BaseController
         $success['customer-list'] = $customersList;
 
         return $this->sendResponse($success, 'All room records for this admin account.');
+    }
+
+    public function fetchChatHistory(Request $request)
+    {
+        $success['chat-history'] = ChatMessage::where('idRoom', '=', $request->idRoom)->get();
+
+        return $this->sendResponse($success, 'Chat history of this room.');
     }
 }
