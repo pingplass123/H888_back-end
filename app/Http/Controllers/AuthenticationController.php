@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Admin;
 use App\Models\ChatRoom;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -48,6 +49,9 @@ class AuthenticationController extends BaseController
 
                 $room = ChatRoom::where('idCustomer', '=', $success['id'])->first();
                 $success['room'] =  $room;
+
+                $admin = Admin::where('idAdmin', '=', $success['belongsTo'])->first();
+                $success['nameAdmin'] = $admin->name;
             }
 
             return $this->sendResponse($success, 'User login successfully.');
