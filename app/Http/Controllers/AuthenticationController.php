@@ -37,6 +37,7 @@ class AuthenticationController extends BaseController
             $success['token'] =  $user->createToken('H888')->plainTextToken; 
             $success['name'] =  $user->username;
             $success['role'] =  $role;
+            $success['idUser'] =  $user->idUser;
 
             if($user->isAdmin() != []) // send id back as response
             {
