@@ -45,6 +45,9 @@ class AuthenticationController extends BaseController
             {
                 $success['id'] =  $user->isCustomer()->idCustomer;
                 $success['belongsTo'] =  $user->isCustomer()->created_by;
+
+                $room = ChatRoom::where('idCustomer', '=', $success['id'])->first();
+                $success['room'] =  $room;
             }
 
             return $this->sendResponse($success, 'User login successfully.');
