@@ -24,7 +24,7 @@ class ChatController extends BaseController
 
         foreach($roomsList as $room){
             $customer = Customer::where('idCustomer', '=', $room->idCustomer)->first();
-            $customersList = Arr::add('roomName', '=' , $customer->name)-first();
+            $customersList = Arr::add($customersList, 'roomName', '=' , $customer->name)->first();
         }
 
         $success['room_list'] = $roomsList;
