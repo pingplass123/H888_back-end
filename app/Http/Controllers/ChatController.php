@@ -24,11 +24,11 @@ class ChatController extends BaseController
 
         foreach($roomsList as $room){
             $customer = Customer::where('idCustomer', '=', $room->idCustomer)->first();
-            $customersList = Arr::add($customersList, $room->idRoom, $customer->name);
+            $customersList = Arr::add($customersList, 'roomName', '=',$customer->name);
         }
 
-        $success['room-list'] = $roomsList;
-        $success['customer-list'] = $customersList;
+        $success['room_list'] = $roomsList;
+        $success['customer_list'] = $customersList;
 
         return $this->sendResponse($success, 'All room records for this admin account.');
     }
@@ -100,8 +100,8 @@ class ChatController extends BaseController
             $usersList = Arr::add($usersList, $chat->idMessage, $arr);
         }
 
-        $success['chat-history'] = $chatHistory;
-        $success['user-list'] = $usersList;
+        $success['chat_history'] = $chatHistory;
+        $success['user_list'] = $usersList;
 
         return $this->sendResponse($success, 'Chat history of this room.');
     }
