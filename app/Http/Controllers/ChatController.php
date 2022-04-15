@@ -20,18 +20,15 @@ class ChatController extends BaseController
     public function fetchAdminRooms(Request $request)
     {
         $roomsList = ChatRoom::where('idAdmin', '=', $request->idAdmin)->get();
-        $response = [];
+        $customersList = [];
 
         foreach($roomsList as $room){
             $customer = Customer::where('idCustomer', '=', $room->idCustomer)->first();
-            $data = [
-                "room" => $room,
-                "customer-name" => $customer->name
-            ];
-            array_push($response, $data);
+            $customersList = Arr::add($customersList, $room->idRoom, $customer->name);
         }
 
-        $success['room-list'] = $data;
+        $success['room-list'] = $roomsList;
+        $success['customer-list'] = $customersList;
 
         return $this->sendResponse($success, 'All room records for this admin account.');
     }
