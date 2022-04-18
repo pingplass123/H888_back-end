@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigIncrements('idMessage')->unsigned();
             $table->bigInteger('idRoom')->unsigned();
             $table->bigInteger('sentFrom')->unsigned();
-            $table->binary('image');
+            $table->longtext('image');
             $table->timestamps();
         });
 

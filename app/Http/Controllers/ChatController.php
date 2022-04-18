@@ -42,7 +42,7 @@ class ChatController extends BaseController
         $validatedData = Validator::make($request->all(), [
             'idRoom' => 'bail|required|exists:chat_rooms,idRoom',
             'from' => 'bail|required|exists:users,idUser',
-            'message' => 'bail|required|mimes:jpg,jpeg',
+            'message' => 'bail|required|string',
         ],[
             'idRoom.required'      => 'ID Room must not be empty',
             'idRoom.exists'    => 'ID Room is invalid, not found record',
@@ -59,15 +59,7 @@ class ChatController extends BaseController
         $chat = new ChatMessage();
         $chat->idRoom = $request->idRoom;
         $chat->sentFrom = $request->from;
-
-        // Prepare image and upload to folder
-        $fileNameExt = $request->file('message')->getClientOriginalName();
-        $fileName = pathinfo($fileNameExt, PATHINFO_FILENAME);
-        $fileExt = $request->file('message')->getClientOriginalExtension();
-        $fileNameToStore = $fileName.'_'.time().'.'.$fileExt;
-        $pathToStore = $request->file('message')->move('uploaded_images',$fileNameToStore);
-
-        $chat->message = file_get_contents($pathToStore); // save image
+        $chat->message = $request->message;
         $chat->save();
 
         $sucess['idMessage'] = $chat->idMessage;
