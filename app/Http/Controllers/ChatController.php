@@ -62,7 +62,7 @@ class ChatController extends BaseController
         $chat->image = $request->message;
         $chat->save();
 
-        $sucess['idMessage'] = $chat->idMessage;
+        $success['idMessage'] = $chat->idMessage;
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
