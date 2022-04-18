@@ -59,7 +59,7 @@ class ChatController extends BaseController
         $chat = new ChatMessage();
         $chat->idRoom = $request->idRoom;
         $chat->sentFrom = $request->from;
-        $chat->message = $request->message;
+        $chat->image = $request->message;
         $chat->save();
 
         $sucess['idMessage'] = $chat->idMessage;
