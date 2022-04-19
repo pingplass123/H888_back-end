@@ -70,7 +70,6 @@ class ChatController extends BaseController
     public function fetchChatHistory(Request $request)
     {
         $chatHistory = ChatMessage::where('idRoom', '=', $request->idRoom)->get();
-        $response = [];
 
         foreach($chatHistory as $chat){
             $user = User::where('idUser', '=', $chat->sentFrom)->first();
@@ -88,18 +87,11 @@ class ChatController extends BaseController
                 $record = Customer::where('idUser', '=', $chat->sentFrom)->first();
             }
 
-            $arr = [
-                "message" => $chat,
-                "user" => [
-                    "role" => $role,
-                    "record" => $record
-                ]
-            ];
-
-            array_push($response, $arr);
+            $chat->user_role = $role;
+            $chat->user_record = $record;
         }
 
-        $success['chat_history'] = $response;
+        $success['chat_history'] = $chatHistory;
 
         return $this->sendResponse($success, 'Chat history of this room.');
     }
