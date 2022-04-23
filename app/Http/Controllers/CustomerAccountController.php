@@ -5,6 +5,11 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Customer;
+
+use App\Models\ChatRoom;
+use App\Models\ChatMessage;
+use App\Models\CheckRead;
+
 use App\Http\Controllers\BaseController as BaseController;
 
 use Validator;
@@ -42,6 +47,22 @@ class CustomerAccountController extends BaseController
 
     public function deleteCustomerAccount(Request $request)
     {
+        $room = ChatRoom::where('idCustomer', '=', $request->idCustomer)->first();
+
+        $all_messages = ChatMessage::where('idRoom', '=', $room->idRoom)->get();
+        foreach($all_messages as $message)
+        {
+            $message->delete();
+        }
+        
+        $all_checkpoints = CheckRead::where('idRoom', '=', $room->idRoom)->get();
+        foreach($all_checkpoints as $checkpoint)
+        {
+            $checkpoint->delete();
+        }
+
+        $room->delete();
+
         $customer = Customer::where('idCustomer', '=', $request->idCustomer)->first();
         $user = User::where('idUser', '=', $customer->idUser)->first();
 

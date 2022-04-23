@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\Customer;
+
+use App\Models\ChatRoom;
+use App\Models\ChatMessage;
+use App\Models\CheckRead;
+
 use App\Http\Controllers\BaseController as BaseController;
 
 use Validator;
@@ -43,6 +48,25 @@ class AdminAccountController extends BaseController
 
     public function deleteAdminAccount(Request $request)
     {
+        $all_room = ChatRoom::where('idAdmin', '=', $request->idAdmin)->get();
+
+        foreach($all_room as $room)
+        {
+            $all_messages = ChatMessage::where('idRoom', '=', $room->idRoom)->get();
+            foreach($all_messages as $message)
+            {
+                $message->delete();
+            }
+            
+            $all_checkpoints = CheckRead::where('idRoom', '=', $room->idRoom)->get();
+            foreach($all_checkpoints as $checkpoint)
+            {
+                $checkpoint->delete();
+            }
+
+            $room->delete();
+        }
+        
         $customersList = Customer::where('created_by', '=', $request->idAdmin)->get();
 
         $admin = Admin::where('idAdmin', '=', $request->idAdmin)->first();

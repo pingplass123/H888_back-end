@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Admin;
 use App\Models\ChatRoom;
+use App\Models\CheckRead;
+
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\BaseController as BaseController;
@@ -121,6 +124,22 @@ class AuthenticationController extends BaseController
         $response = $user->assignToCustomer($request->displayName, $request->created_by);
 
         $room = ChatRoom::where('idRoom', '=', $response["idRoom"])->first();
+
+        // first check point for admin
+        $admin = Admin::where('idAdmin', '=', $request->created_by)->first();
+        
+        $checkpoint_a = new CheckRead();
+        $checkpoint_a->idUser = $admin->idUser;
+        $checkpoint_a->idRoom = $response["idRoom"];
+        $checkpoint_a->latest_read = Carbon::now()->toDateTimeString();
+        $checkpoint_a->save();
+
+        // first check point for customer
+        $checkpoint_c = new CheckRead();
+        $checkpoint_c->idUser = $user->idUser;
+        $checkpoint_c->idRoom = $response["idRoom"];
+        $checkpoint_c->latest_read = Carbon::now()->toDateTimeString();
+        $checkpoint_c->save();
 
         $success['displayName'] = $request->displayName;
         $success['belongsTo'] = $request->created_by; // idAdmin
