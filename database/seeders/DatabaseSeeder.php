@@ -20,8 +20,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $user = new User();
-        $user->username = 'pingplass1';
-        $user->password = Hash::make('670qeycc');
+        $user->username = 'ownerH888';
+        $user->password = Hash::make('h888pass');
         $user->save();
         
         $owner = new Owner();

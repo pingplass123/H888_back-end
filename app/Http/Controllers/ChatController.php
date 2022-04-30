@@ -44,7 +44,18 @@ class ChatController extends BaseController
                 $date = Carbon::createFromFormat('Y-m-d H:i:s', $last_message_time, 'UTC');
                 $date->setTimezone('Asia/Bangkok');
 
-                $data["display_time"] = $date;
+                $original_date = $date->toDateTimeString();
+                $date = explode(' ', $original_date)[0];
+                $time = explode(' ', $original_date)[1];
+
+                $day = explode('-', $date)[2];
+                $month = explode('-', $date)[1];
+                $year = explode('-', $date)[0];
+
+                $hour = explode(':', $time)[0];
+                $minute = explode(':', $time)[1];
+                
+                $data["display_time"] = $hour.".".$minute." ".$day."/".$month."/".$year;
             }
             else {
                 $data["display_time"] = 0;
@@ -120,7 +131,18 @@ class ChatController extends BaseController
             $date = Carbon::createFromFormat('Y-m-d H:i:s', $utc_time, 'UTC');
             $date->setTimezone('Asia/Bangkok');
 
-            $chat->show_time = $date;
+            $original_date = $date->toDateTimeString();
+            $date = explode(' ', $original_date)[0];
+            $time = explode(' ', $original_date)[1];
+
+            $day = explode('-', $date)[2];
+            $month = explode('-', $date)[1];
+            $year = explode('-', $date)[0];
+
+            $hour = explode(':', $time)[0];
+            $minute = explode(':', $time)[1];
+
+            $chat->show_time = $hour.".".$minute." ".$day."/".$month."/".$year;
         }
 
         $success['chat_history'] = $chatHistory;
