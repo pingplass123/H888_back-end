@@ -71,28 +71,16 @@ class ChatController extends BaseController
 
     public function storeMessage(Request $request)
     {
-        $validatedData = Validator::make($request->all(), [
-            'idRoom' => 'bail|required|exists:chat_rooms,idRoom',
-            'from' => 'bail|required|exists:users,idUser'
-        ],[
-            'idRoom.required'      => 'ID Room must not be empty',
-            'idRoom.exists'    => 'ID Room is invalid, not found record',
-            'from.required'      => 'ID User must not be empty',
-            'from.exists'    => 'ID User is invalid, not found record'
-        ]);
-
-        if ($validatedData->fails()) {
-            $failedRules = $validatedData->failed(); 
-            return $this->sendError('Invalid Data.', ['error'=>$failedRules]);
-        }
+        $idRoom = $_POST['idRoom'];
+        $from = $_POST['from'];
 
         $response = File::ensureDirectoryExists('./photos/');
         $path_move_to = './photos/' . $_FILES['photo']['name'];
         move_uploaded_file($_FILES['photo']['tmp_name'], $path_move_to);
 
         $chat = new ChatMessage();
-        $chat->idRoom = $request->idRoom;
-        $chat->sentFrom = $request->from;
+        $chat->idRoom = $idRoom;
+        $chat->sentFrom = $from;
         $chat->image = $path_move_to;
         $chat->save();
 
