@@ -73,7 +73,9 @@ class AdminAccountController extends BaseController
         $user = User::where('idUser', '=', $admin->idUser)->first();
 
         foreach($customersList as $customer){
+            $user_customer = User::where('idUser', '=', $customer->idUser)->first(); 
             $customer->delete();
+            $user_customer->delete(); 
         }
 
         $admin->delete();
