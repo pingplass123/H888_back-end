@@ -71,7 +71,9 @@ class ChatController extends BaseController
 
     public function storeMessage(Request $request)
     {
-        $idRoom = $_POST['idRoom'];
+        $success['message1'] = $request;
+
+        /* $idRoom = $_POST['idRoom'];
         $from = $_POST['from'];
 
         $response = File::ensureDirectoryExists('./photos/');
@@ -84,7 +86,7 @@ class ChatController extends BaseController
         $chat->image = $path_move_to;
         $chat->save();
 
-        $success['message'] = $chat;
+        $success['message'] = $chat; */
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
