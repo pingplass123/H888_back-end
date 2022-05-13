@@ -87,7 +87,6 @@ class ChatController extends BaseController
         }
 
         $response = File::ensureDirectoryExists('./photos/');
-        dd($response);
         $path_move_to = './photos/' . $_FILES['photo']['name'];
         move_uploaded_file($_FILES['photo']['tmp_name'], $path_move_to);
 
@@ -97,7 +96,7 @@ class ChatController extends BaseController
         $chat->image = $path_move_to;
         $chat->save();
 
-        $success['idMessage'] = $chat->idMessage;
+        $success['message'] = $chat;
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
