@@ -71,7 +71,7 @@ class ChatController extends BaseController
 
     public function storeMessage(Request $request)
     {
-        $success['message2'] = $_FILES['photo']['name'];
+        dd($_FILES);
 
         /* $idRoom = $_POST['idRoom'];
         $from = $_POST['from'];
