@@ -73,14 +73,12 @@ class ChatController extends BaseController
     {
         $validatedData = Validator::make($request->all(), [
             'idRoom' => 'bail|required|exists:chat_rooms,idRoom',
-            'from' => 'bail|required|exists:users,idUser',
-            'message' => 'bail|required|string',
+            'from' => 'bail|required|exists:users,idUser'
         ],[
             'idRoom.required'      => 'ID Room must not be empty',
             'idRoom.exists'    => 'ID Room is invalid, not found record',
             'from.required'      => 'ID User must not be empty',
-            'from.exists'    => 'ID User is invalid, not found record',
-            'message.required'      => 'Message must not be empty',
+            'from.exists'    => 'ID User is invalid, not found record'
         ]);
 
         if ($validatedData->fails()) {
@@ -88,10 +86,15 @@ class ChatController extends BaseController
             return $this->sendError('Invalid Data.', ['error'=>$failedRules]);
         }
 
+        $response = File::ensureDirectoryExists('./photos/');
+        dd($response);
+        $path_move_to = './photos/' . $_FILES['photo']['name'];
+        move_uploaded_file($_FILES['photo']['tmp_name'], $path_move_to);
+
         $chat = new ChatMessage();
         $chat->idRoom = $request->idRoom;
         $chat->sentFrom = $request->from;
-        $chat->image = $request->message;
+        $chat->image = $path_move_to;
         $chat->save();
 
         $success['idMessage'] = $chat->idMessage;
