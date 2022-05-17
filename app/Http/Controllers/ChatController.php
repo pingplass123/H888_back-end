@@ -79,7 +79,7 @@ class ChatController extends BaseController
         $_POST = json_decode($rest_json, true);
 
 
-        $success['data'] = $_FILES;
+        $success['data'] = $_POST["file"]["tmp_name"];
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
