@@ -75,11 +75,11 @@ class ChatController extends BaseController
         header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
         header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
         header("Content-Type: application/json; charset=UTF-8");
-        $rest_json = file_get_contents("php://input");
-        $_POST = json_decode($rest_json, true);
+        $rest_json = file_get_contents($_FILES["file"]["tmp_name"]);;
+        //$_POST = json_decode($rest_json, true);
 
 
-        $success['data'] = $_POST["file"]["tmp_name"];
+        $success['data'] = $rest_json;
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
