@@ -69,9 +69,9 @@ class ChatController extends BaseController
         return $this->sendResponse($success, 'All room records for this admin account.');
     }
 
-    public function storeMessage(Request $request)
+    public function storeMessage()
     {
-        $success['data'] = $_FILES;
+        $success['data'] = isset($_POST['idRoom']);
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
