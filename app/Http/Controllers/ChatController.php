@@ -71,7 +71,7 @@ class ChatController extends BaseController
 
     public function storeMessage()
     {
-        $success['data'] = isset($_POST['idRoom']);
+        $success['data'] = ($_SERVER['REQUEST_METHOD'] == 'POST');
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
