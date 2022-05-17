@@ -71,7 +71,7 @@ class ChatController extends BaseController
 
     public function storeMessage(Request $request)
     {
-        $success['data'] = $request;
+        $success['data'] = $_FILES;
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
