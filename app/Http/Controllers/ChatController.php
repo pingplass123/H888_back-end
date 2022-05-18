@@ -69,17 +69,32 @@ class ChatController extends BaseController
         return $this->sendResponse($success, 'All room records for this admin account.');
     }
 
-    public function storeMessage()
+    public function storeMessage(Request $request)
     {
-        header('Access-Control-Allow-Origin: *');
-        header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
-        header("Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, X-Requested-With");
-        header("Content-Type: application/json; charset=UTF-8");
-        $rest_json = file_get_contents("php://input");
-        $_POST = json_decode($rest_json, true);
+        $validatedData = Validator::make($request->all(), [
+            'idRoom' => 'bail|required|exists:chat_rooms,idRoom',
+            'from' => 'bail|required|exists:users,idUser',
+            'message' => 'bail|required|string',
+        ],[
+            'idRoom.required'      => 'ID Room must not be empty',
+            'idRoom.exists'    => 'ID Room is invalid, not found record',
+            'from.required'      => 'ID User must not be empty',
+            'from.exists'    => 'ID User is invalid, not found record',
+            'message.required'      => 'Message must not be empty',
+        ]);
 
+        if ($validatedData->fails()) {
+            $failedRules = $validatedData->failed(); 
+            return $this->sendError('Invalid Data.', ['error'=>$failedRules]);
+        }
 
-        $success['data_post'] = $_POST["formData"]["_parts"][0];
+        $chat = new ChatMessage();
+        $chat->idRoom = $request->idRoom;
+        $chat->sentFrom = $request->from;
+        $chat->image = $request->message;
+        $chat->save();
+
+        $success['idMessage'] = $chat->idMessage;
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
