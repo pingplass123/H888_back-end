@@ -15,6 +15,9 @@ use Illuminate\Support\Arr;
 use Validator;
 use Carbon\Carbon;
 
+use Illuminate\Http\File;
+use Illuminate\Http\UploadedFile;
+
 use App\Http\Controllers\BaseController as BaseController;
 
 class ChatController extends BaseController
@@ -88,13 +91,35 @@ class ChatController extends BaseController
             return $this->sendError('Invalid Data.', ['error'=>$failedRules]);
         }
 
-        $chat = new ChatMessage();
-        $chat->idRoom = $request->idRoom;
-        $chat->sentFrom = $request->from;
-        $chat->image = $request->message;
-        $chat->save();
+        $fileData = base64_decode(Arr::last(explode(',', $request->message)));
 
-        $success['idMessage'] = $chat->idMessage;
+        // Create temp file and get its absolute path
+        $tempFile = tmpfile();
+        $tempFilePath = stream_get_meta_data($tempFile)['uri'];
+
+        // Save file data in file
+        file_put_contents($tempFilePath, $fileData);
+        $tempFileObject = new File($tempFilePath);
+
+        $file = new UploadedFile(
+            $tempFileObject->getPathname(),
+            $tempFileObject->getFilename(),
+            $tempFileObject->getMimeType(),
+            0,
+            true // Mark it as test, since the file isn't from real HTTP POST.
+        );
+
+        $path = public_path('upload');
+        $response = $file->store($path);
+
+        // Close this file after response is sent.
+        // Closing the file will cause to remove it from temp director!
+        app()->terminating(function () use ($tempFile) {
+            fclose($tempFile);
+        });
+
+        // return UploadedFile object
+        $success['idMessage'] = $response;
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
