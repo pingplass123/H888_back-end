@@ -109,7 +109,7 @@ class ChatController extends BaseController
             true // Mark it as test, since the file isn't from real HTTP POST.
         );
 
-        $path = 'upload';
+        $path = 'public/upload';
         $response = $file->store($path);
 
         // Close this file after response is sent.
