@@ -118,8 +118,13 @@ class ChatController extends BaseController
             fclose($tempFile);
         });
 
-        // return UploadedFile object
-        $success['idMessage'] = $response;
+        $chat = new ChatMessage();
+        $chat->idRoom = $request->idRoom;
+        $chat->sentFrom = $request->from;
+        $chat->image = $response;
+        $chat->save();
+
+        $success['chat_message'] = $chat;
 
         return $this->sendResponse($success, 'Stored message successfully.');
     }
