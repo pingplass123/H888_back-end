@@ -14,7 +14,6 @@ use App\Models\CheckRead;
 use Illuminate\Support\Arr;
 use Validator;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\File as FileFacade;
 
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
@@ -197,7 +196,6 @@ class ChatController extends BaseController
 
         $chat = ChatMessage::where('idMessage', '=', $request->idMessage)->first();
         $path = $chat->image;
-        FileFacade::delete($path);
         $chat->delete();
 
         $success['idMessage'] = $request->idMessage;
