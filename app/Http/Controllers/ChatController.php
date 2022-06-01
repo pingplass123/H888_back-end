@@ -112,6 +112,24 @@ class ChatController extends BaseController
         $path = 'public/upload';
         $response = $file->store($path);
 
+        $url = 'https://c7ba-1-10-222-147.ngrok.io/scan/image';
+        $data = [
+            'url' => "https://apps.huad888.com/".str_replace("public","storage",$response),
+        ];
+        $post = json_encode($data);
+        $headers = array(
+            'Content-Type: application/json',
+        );
+
+        $ch = curl_init($url);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $post);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        curl_close($ch);
+
         // Close this file after response is sent.
         // Closing the file will cause to remove it from temp director!
         app()->terminating(function () use ($tempFile) {
