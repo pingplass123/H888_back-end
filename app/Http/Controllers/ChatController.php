@@ -17,6 +17,7 @@ use Carbon\Carbon;
 
 use Illuminate\Http\File;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 
 use App\Http\Controllers\BaseController as BaseController;
 
@@ -197,6 +198,8 @@ class ChatController extends BaseController
         $chat = ChatMessage::where('idMessage', '=', $request->idMessage)->first();
         $path = $chat->image;
         $chat->delete();
+
+        Storage::delete($path);
 
         $success['idMessage'] = $request->idMessage;
         $success['action'] = "delete";
